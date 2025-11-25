@@ -1,0 +1,37 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+<div style="max-width: 600px; margin: 50px auto; padding: 20px; border: 1px solid #ccc;">
+    <h2>Buy New Ticket</h2>
+    
+    {% for message in messages %}
+        <p style="color: red; font-weight: bold;">{{ message }}</p>
+    {% endfor %}
+
+    <p>Your current balance: **₹{{ wallet.balance|floatformat:2 }}**</p>
+
+    <form method="post" action="{% url 'buy_ticket' %}">
+        {% csrf_token %}
+        
+        <label for="start_station">Start Station:</label>
+        <select name="start_station" required style="padding: 8px; margin-bottom: 15px; width: 100%;">
+            {% for station in stations %}
+                <option value="{{ station.id }}">{{ station.name }}</option>
+            {% endfor %}
+        </select>
+        
+        <label for="end_station">End Station:</label>
+        <select name="end_station" required style="padding: 8px; margin-bottom: 20px; width: 100%;">
+            {% for station in stations %}
+                <option value="{{ station.id }}">{{ station.name }}</option>
+            {% endfor %}
+        </select>
+        
+        <button type="submit" style="padding: 10px; background-color: #007bff; color: white; border: none; width: 100%;">
+            Purchase Ticket (~₹10.00)
+        </button>
+    </form>
+    
+    <p style="margin-top: 20px;"><a href="{% url 'wallet_view' %}">Back to Wallet</a></p>
+</div>
+{% endblock %}

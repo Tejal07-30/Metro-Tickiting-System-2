@@ -1,0 +1,22 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+<div style="max-width: 600px; margin: 50px auto; padding: 20px; border: 1px solid #ccc;">
+    <h2>💳 My Wallet</h2>
+    {% for message in messages %}
+        <p style="color: green; font-weight: bold;">{{ message }}</p>
+    {% endfor %}
+    
+    <p style="font-size: 24px; font-weight: bold;">Current Balance: ₹{{ wallet.balance|default:"0.00"|floatformat:2 }}</p>
+    
+    <hr>
+    <h3>Actions:</h3>
+    <ul>
+        <li><a href="{% url 'add_funds' %}">Add Funds to Wallet</a></li>
+        <li><a href="{% url 'buy_ticket' %}">Buy a New Ticket</a></li>
+        <li><a href="{% url 'ticket_history' %}">View Ticket History</a></li>
+    </ul>
+    
+    <p style="margin-top: 20px;"><a href="{% url 'home' %}">Back to Home Dashboard</a></p>
+</div>
+{% endblock %}

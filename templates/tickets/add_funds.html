@@ -1,0 +1,26 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+<div style="max-width: 600px; margin: 50px auto; padding: 20px; border: 1px solid #ccc;">
+    <h2>Add Funds</h2>
+    
+    {% for message in messages %}
+        <p style="color: red; font-weight: bold;">{{ message }}</p>
+    {% endfor %}
+    
+    <p>Your current balance is: ₹{{ wallet.balance|floatformat:2 }}</p>
+
+    <form method="post" action="{% url 'add_funds' %}">
+        {% csrf_token %}
+        <label for="amount">Amount to Add (e.g., 100.00):</label>
+        <input type="number" step="0.01" name="amount" required min="1"
+               style="width: 100%; padding: 10px; margin-bottom: 20px; box-sizing: border-box;">
+        
+        <button type="submit" style="padding: 10px; background-color: #28a745; color: white; border: none; width: 100%;">
+            Confirm Addition
+        </button>
+    </form>
+    
+    <p style="margin-top: 20px;"><a href="{% url 'wallet_view' %}">Back to Wallet</a></p>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+<div style="max-width: 600px; margin: 50px auto; padding: 20px; border: 1px solid #ccc;">
+    <h2>Ticket Scanner Interface</h2>
+    
+    {% comment %} Displays success/error messages from scan_ticket view {% endcomment %}
+    {% for message in messages %}
+        <p style="color: red; font-weight: bold;">{{ message }}</p>
+    {% endfor %}
+
+    <h3>Scan Ticket ID:</h3>
+    <form method="post" action="{% url 'scan_ticket' %}">
+        {% csrf_token %}
+        <input type="text" name="ticket_id" placeholder="Enter Ticket ID (UUID)" required 
+               style="width: 80%; padding: 10px; margin-bottom: 15px;">
+        <button type="submit" style="padding: 10px; background-color: #007bff; color: white; border: none;">Process Scan</button>
+    </form>
+    
+    <hr>
+    <h3><a href="{% url 'offline_purchase' %}">Go to Offline Cash Purchase</a></h3>
+    <p><a href="{% url 'home' %}">Back to Home Dashboard</a></p>
+</div>
+{% endblock %}

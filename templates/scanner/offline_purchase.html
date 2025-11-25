@@ -1,0 +1,37 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+<div style="max-width: 600px; margin: 50px auto; padding: 20px; border: 1px solid #ccc;">
+    <h2>Offline Ticket Cash Purchase</h2>
+    
+    {% for message in messages %}
+        <p style="color: green; font-weight: bold;">{{ message }}</p>
+    {% endfor %}
+
+    <p>Use this interface for cash transactions. The ticket will be marked as **USED** immediately.</p>
+    
+    <form method="post" action="{% url 'offline_purchase' %}">
+        {% csrf_token %}
+        
+        <label for="start_station">Start Station:</label>
+        <select name="start_station" required style="padding: 8px; margin-bottom: 10px; width: 100%;">
+            {% for station in stations %}
+                <option value="{{ station.id }}">{{ station.name }}</option>
+            {% endfor %}
+        </select>
+        
+        <label for="end_station">End Station:</label>
+        <select name="end_station" required style="padding: 8px; margin-bottom: 20px; width: 100%;">
+            {% for station in stations %}
+                <option value="{{ station.id }}">{{ station.name }}</option>
+            {% endfor %}
+        </select>
+        
+        <button type="submit" style="padding: 10px; background-color: #ffc107; color: black; border: none;">
+            Issue Cash Ticket (Mark as Used)
+        </button>
+    </form>
+    
+    <p style="margin-top: 20px;"><a href="{% url 'scanner_interface' %}">Back to Scan Interface</a></p>
+</div>
+{% endblock %}
